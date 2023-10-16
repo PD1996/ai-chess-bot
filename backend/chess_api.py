@@ -1,12 +1,21 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import chess
 
 app = Flask(__name__)
+CORS(app)
+
 board = chess.Board()
+
+
+@app.route("/", methods=["GET"])
+def index():
+    return "Welcome to the Chess API."
 
 
 @app.route("/move", methods=["POST"])
 def make_move():
+    print("Received data:", request.json)
     global board
     move_uci = request.json.get("move", None)
 
@@ -26,4 +35,4 @@ def make_move():
 
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(port=5001)

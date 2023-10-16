@@ -1,3 +1,4 @@
 python-chess
 
-Flask
+flask
+flask-cors
