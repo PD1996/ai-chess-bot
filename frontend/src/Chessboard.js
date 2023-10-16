@@ -12,7 +12,6 @@ const Chessboard = () => {
       });
       console.log("Response from server:", response.data);
 
-      // Assuming the new board state is returned in response.data.board
       const boardString = response.data.board;
       const boardArray = boardString.split("\n").map((row) => row.split(" "));
       setBoard(boardArray);
