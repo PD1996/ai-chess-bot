@@ -31,14 +31,23 @@ def make_move():
         return jsonify({"error": "Illegal move"}), 400
 
     board.push(move)
-    return jsonify({"board": board.fen()}), 200
+
+    status = "In Progress"
+    if board.is_checkmate():
+        status = (
+            f"Checkmate! - {'White' if board.turn == chess.BLACK else 'Black'} wins!"
+        )
+    elif board.is_stalemate():
+        status = "Stalemate!"
+
+    return jsonify({"board": board.fen(), "status": status}), 200
 
 
 @app.route("/reset", methods=["POST"])
 def reset_board():
     global board
     board = chess.Board()
-    return jsonify({"board": board.fen()}), 200
+    return jsonify({"board": board.fen(), "status": "In Progress"}), 200
 
 
 if __name__ == "__main__":

@@ -35,20 +35,7 @@ const Chessboard = () => {
   const [fen, setFen] = useState("start");
   const [dragging, setDragging] = useState(null);
   const [currentTurn, setCurrentTurn] = useState("w");
-
-  const loadBoard = async () => {
-    try {
-      const response = await axios.post("http://localhost:5001/move", {
-        fen: board.fen(),
-      });
-      const newFen = response.data.board;
-      setFen(newFen);
-      board.load(newFen);
-      setCurrentTurn(board.turn());
-    } catch (error) {
-      console.log("Error loading board:", error);
-    }
-  };
+  const [gameStatus, setGameStatus] = useState("In Progress");
 
   const sendMoveToServer = async (move) => {
     try {
@@ -59,8 +46,24 @@ const Chessboard = () => {
       setFen(newFen);
       board.load(newFen);
       setCurrentTurn(board.turn());
+      setGameStatus(response.data.status);
     } catch (error) {
       console.log("Error sending move:", error);
+    }
+  };
+
+  const loadBoard = async () => {
+    try {
+      const response = await axios.post("http://localhost:5001/move", {
+        fen: board.fen(),
+      });
+      const newFen = response.data.board;
+      setFen(newFen);
+      board.load(newFen);
+      setCurrentTurn(board.turn());
+      setGameStatus(response.data.status);
+    } catch (error) {
+      console.log("Error loading board:", error);
     }
   };
 
@@ -128,6 +131,7 @@ const Chessboard = () => {
     <div>
       <div className="chessboard">{renderBoard()}</div>
       <div>Current Turn: {currentTurn === "w" ? "White" : "Black"}</div>
+      <div>Game Status: {gameStatus}</div>
       <button onClick={resetBoard}>Play Again</button>
     </div>
   );
