@@ -48,10 +48,23 @@ const Chessboard = () => {
     }
   };
 
+  const sendMoveToServer = async (move) => {
+    try {
+      const response = await axios.post("http://localhost:5001/move", {
+        move: move,
+      });
+      const newFen = response.data.board;
+      setFen(newFen);
+      board.load(newFen);
+    } catch (error) {
+      console.log("Error sending move:", error);
+    }
+  };
+
   const handleDrop = (to) => {
     const move = board.move({ from: dragging, to: to, promotion: "q" });
     if (move === null) return;
-    loadBoard();
+    sendMoveToServer(move.from + move.to);
   };
 
   useEffect(() => {

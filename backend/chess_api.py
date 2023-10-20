@@ -31,7 +31,7 @@ def make_move():
         return jsonify({"error": "Illegal move"}), 400
 
     board.push(move)
-    return jsonify({"board": str(board)}), 200
+    return jsonify({"board": board.fen()}), 200
 
 
 if __name__ == "__main__":
