@@ -128,7 +128,7 @@ const Chessboard = () => {
     <div>
       <div className="chessboard">{renderBoard()}</div>
       <div>Current Turn: {currentTurn === "w" ? "White" : "Black"}</div>
-      <button onClick={resetBoard}>Refresh Board</button>
+      <button onClick={resetBoard}>Play Again</button>
     </div>
   );
 };
