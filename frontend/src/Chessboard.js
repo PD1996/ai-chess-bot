@@ -103,10 +103,21 @@ const Chessboard = () => {
     return squares;
   };
 
+  const resetBoard = async () => {
+    try {
+      const response = await axios.post("http://localhost:5001/reset");
+      const newFen = response.data.board;
+      setFen(newFen);
+      board.load(newFen);
+    } catch (error) {
+      console.log("Error resetting board:", error);
+    }
+  };
+
   return (
     <div>
       <div className="chessboard">{renderBoard()}</div>
-      <button onClick={loadBoard}>Refresh Board</button>
+      <button onClick={resetBoard}>Refresh Board</button>
     </div>
   );
 };

@@ -34,5 +34,12 @@ def make_move():
     return jsonify({"board": board.fen()}), 200
 
 
+@app.route("/reset", methods=["POST"])
+def reset_board():
+    global board
+    board = chess.Board()
+    return jsonify({"board": board.fen()}), 200
+
+
 if __name__ == "__main__":
     app.run(port=5001)
