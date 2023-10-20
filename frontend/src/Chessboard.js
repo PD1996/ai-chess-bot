@@ -65,9 +65,15 @@ const Chessboard = () => {
   };
 
   const handleDrop = (to) => {
-    const move = board.move({ from: dragging, to: to, promotion: "q" });
-    if (move === null) return;
-    sendMoveToServer(move.from + move.to);
+    try {
+      const move = board.move({ from: dragging, to: to, promotion: "q" });
+      if (move === null) {
+        return;
+      }
+      sendMoveToServer(move.from + move.to);
+    } catch (e) {
+      console.log("Invalid move", e);
+    }
   };
 
   useEffect(() => {
@@ -121,7 +127,7 @@ const Chessboard = () => {
   return (
     <div>
       <div className="chessboard">{renderBoard()}</div>
-      <div>Current Turn: {currentTurn === "w" ? "White" : "Black"}</div>{" "}
+      <div>Current Turn: {currentTurn === "w" ? "White" : "Black"}</div>
       <button onClick={resetBoard}>Refresh Board</button>
     </div>
   );
