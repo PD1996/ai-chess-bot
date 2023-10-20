@@ -34,6 +34,7 @@ const Chessboard = () => {
   const [board, setBoard] = useState(new Chess());
   const [fen, setFen] = useState("start");
   const [dragging, setDragging] = useState(null);
+  const [currentTurn, setCurrentTurn] = useState("w");
 
   const loadBoard = async () => {
     try {
@@ -43,6 +44,7 @@ const Chessboard = () => {
       const newFen = response.data.board;
       setFen(newFen);
       board.load(newFen);
+      setCurrentTurn(board.turn());
     } catch (error) {
       console.log("Error loading board:", error);
     }
@@ -56,6 +58,7 @@ const Chessboard = () => {
       const newFen = response.data.board;
       setFen(newFen);
       board.load(newFen);
+      setCurrentTurn(board.turn());
     } catch (error) {
       console.log("Error sending move:", error);
     }
@@ -109,6 +112,7 @@ const Chessboard = () => {
       const newFen = response.data.board;
       setFen(newFen);
       board.load(newFen);
+      setCurrentTurn(board.turn());
     } catch (error) {
       console.log("Error resetting board:", error);
     }
@@ -117,6 +121,7 @@ const Chessboard = () => {
   return (
     <div>
       <div className="chessboard">{renderBoard()}</div>
+      <div>Current Turn: {currentTurn === "w" ? "White" : "Black"}</div>{" "}
       <button onClick={resetBoard}>Refresh Board</button>
     </div>
   );
