@@ -125,7 +125,9 @@ const Chessboard = () => {
 
   const resetBoard = async () => {
     try {
-      const response = await axios.post("http://localhost:5001/reset");
+      const response = await axios.post("http://localhost:5001/reset", {
+        color: rotateBoard ? "w" : "b",
+      });
       const newFen = response.data.board;
       setFen(newFen);
       board.load(newFen);

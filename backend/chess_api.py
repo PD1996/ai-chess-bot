@@ -55,8 +55,12 @@ def make_move():
 @app.route("/reset", methods=["POST"])
 def reset_board():
     global board
+    color = request.json.get("color", "w")
     board = chess.Board()
-    if board.turn == chess.BLACK:
+    if board.turn == chess.WHITE and color == "b":
+        result = engine.play(board, chess.engine.Limit(time=0.1))
+        board.push(result.move)
+    elif board.turn == chess.BLACK and color == "w":
         result = engine.play(board, chess.engine.Limit(time=0.1))
         board.push(result.move)
     return jsonify({"board": board.fen(), "status": "In Progress"}), 200
