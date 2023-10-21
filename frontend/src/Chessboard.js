@@ -36,6 +36,7 @@ const Chessboard = () => {
   const [dragging, setDragging] = useState(null);
   const [currentTurn, setCurrentTurn] = useState("w");
   const [gameStatus, setGameStatus] = useState("In Progress");
+  const [rotateBoard, setRotateBoard] = useState(false);
 
   const sendMoveToServer = async (move) => {
     try {
@@ -85,8 +86,15 @@ const Chessboard = () => {
 
   const renderBoard = () => {
     const squares = [];
-    for (let i = 7; i >= 0; i--) {
-      for (let j = 0; j <= 7; j++) {
+    const rows = rotateBoard
+      ? [0, 1, 2, 3, 4, 5, 6, 7]
+      : [7, 6, 5, 4, 3, 2, 1, 0];
+    const cols = rotateBoard
+      ? [0, 1, 2, 3, 4, 5, 6, 7]
+      : [7, 6, 5, 4, 3, 2, 1, 0];
+
+    for (let i of rows) {
+      for (let j of cols) {
         const square = String.fromCharCode(97 + j) + (i + 1);
         const piece = board.get(square);
         const color = (i + j) % 2 === 0 ? "black" : "white";
@@ -122,6 +130,7 @@ const Chessboard = () => {
       setFen(newFen);
       board.load(newFen);
       setCurrentTurn(board.turn());
+      setRotateBoard(!rotateBoard);
     } catch (error) {
       console.log("Error resetting board:", error);
     }
