@@ -133,6 +133,7 @@ const Chessboard = () => {
       board.load(newFen);
       setCurrentTurn(board.turn());
       setRotateBoard(!rotateBoard);
+      setGameStatus(response.data.status);
     } catch (error) {
       console.log("Error resetting board:", error);
     }
