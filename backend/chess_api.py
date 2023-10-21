@@ -1,11 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import chess
+import chess.engine
+
 
 app = Flask(__name__)
 CORS(app)
 
 board = chess.Board()
+
+engine = chess.engine.SimpleEngine.popen_uci("./stockfish")
 
 
 @app.route("/", methods=["GET"])
@@ -32,6 +36,11 @@ def make_move():
 
     board.push(move)
 
+    # AI's turn
+    if not board.is_game_over():
+        result = engine.play(board, chess.engine.Limit(time=0.1))
+        board.push(result.move)
+
     status = "In Progress"
     if board.is_checkmate():
         status = (
@@ -47,6 +56,9 @@ def make_move():
 def reset_board():
     global board
     board = chess.Board()
+    if board.turn == chess.BLACK:
+        result = engine.play(board, chess.engine.Limit(time=0.1))
+        board.push(result.move)
     return jsonify({"board": board.fen(), "status": "In Progress"}), 200
 
 
