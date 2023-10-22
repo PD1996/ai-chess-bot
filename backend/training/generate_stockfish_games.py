@@ -4,6 +4,12 @@ import chess.engine
 from datetime import datetime
 
 
+def count_games_in_file(file_path):
+    with open(file_path, "r") as f:
+        content = f.read()
+    return content.count('[Event "Self-play"]')
+
+
 def play_game(engine):
     board = chess.Board()
     game = chess.pgn.Game()
@@ -26,15 +32,22 @@ def play_game(engine):
 
 if __name__ == "__main__":
     engine_path = "../stockfish"
+    pgn_file_path = "./data/self_play_games.pgn"
     game_count = 0
+    total_games_in_file = count_games_in_file(pgn_file_path)
+
     with chess.engine.SimpleEngine.popen_uci(engine_path) as engine:
         try:
             while True:
                 game = play_game(engine)
-                with open("./data/self_play_games.pgn", "a") as pgn_file:
+                with open(pgn_file_path, "a") as pgn_file:
                     print(game, file=pgn_file)
                     print("\n", file=pgn_file)
+
                 game_count += 1
-                print(f"Generated {game_count} games.")
+                total_games_in_file += 1
+
+                print(f"Generated {game_count} games during this run.")
+                print(f"Total games in file: {total_games_in_file}")
         except KeyboardInterrupt:
             print("Script stopped manually.")
