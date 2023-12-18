@@ -1,8 +1,8 @@
 # ai-chess-bot
-A chess bot you can play against - powered by machine learning.
+Play against various chess engines. 
 
 # Current Status
 You can play against Stockfish 16.
 
 # Next Steps
-Creating a custom chess engine, and then having it replace Stockfish as the game's opponent.
+Training my own chess engine, and then having it replace Stockfish as the game's opponent.
