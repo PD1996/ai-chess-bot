@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
+
 import { Chess } from "chess.js";
+
 import whiteKing from "./assets/white_king.png";
 import whiteQueen from "./assets/white_queen.png";
 import whiteRook from "./assets/white_rook.png";
@@ -13,6 +16,7 @@ import blackRook from "./assets/black_rook.png";
 import blackBishop from "./assets/black_bishop.png";
 import blackKnight from "./assets/black_knight.png";
 import blackPawn from "./assets/black_pawn.png";
+
 import "./Chessboard.css";
 
 const imageMapping = {
