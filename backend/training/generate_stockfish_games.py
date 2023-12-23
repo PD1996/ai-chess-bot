@@ -1,7 +1,10 @@
 import chess
 import chess.pgn
 import chess.engine
+
 from datetime import datetime
+
+import os
 
 
 def count_games_in_file(file_path):
@@ -31,7 +34,12 @@ def play_game(engine):
 
 
 if __name__ == "__main__":
-    engine_path = "../stockfish"
+    # Detect the operating system
+    if os.name == 'nt':  # Windows
+        engine_path = "../stockfish-windows.exe"
+    else:  # MacOS or Linux
+        engine_path = "../stockfish"
+
     pgn_file_path = "./data/self_play_games.pgn"
     game_count = 0
     total_games_in_file = count_games_in_file(pgn_file_path)
