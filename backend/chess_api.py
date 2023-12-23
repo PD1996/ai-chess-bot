@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+
 import chess
 import chess.engine
+
+import os
 
 
 app = Flask(__name__)
@@ -9,7 +12,11 @@ CORS(app)
 
 board = chess.Board()
 
-engine = chess.engine.SimpleEngine.popen_uci("./stockfish")
+# Detect the operating system
+if os.name == 'nt':  # Windows
+    engine = chess.engine.SimpleEngine.popen_uci("./stockfish-windows.exe")
+else:  # MacOS or Linux
+    engine = chess.engine.SimpleEngine.popen_uci("./stockfish")
 
 
 @app.route("/", methods=["GET"])
