@@ -1,3 +1,5 @@
-backend/training/data/human_readable_training_data.json
+backend/training/data/readable_training_data.json
+backend/training/data/readable_test_data.json
 backend/training/data/training_data.json
+backend/training/data/test_data.json
 backend/training/data/self_play_games.pgn
