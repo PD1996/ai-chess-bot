@@ -57,3 +57,6 @@ with open("./data/training_data.json", "w") as f:
 
 with open("./data/test_data.json", "w") as f:
     json.dump(test_data, f)
+
+print(f"Number of games added to training data: {len(training_games)}")
+print(f"Number of games added to test data: {len(test_games)}")
